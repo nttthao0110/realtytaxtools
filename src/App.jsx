@@ -1045,13 +1045,12 @@ function DepreciationCalc({lang:L="en"}){
     parse(inp.attorneyFeesBasis)+parse(inp.surveyFee)+parse(inp.inspections)+
     parse(inp.appraisalBasis)+parse(inp.otherBasis);
 
-  // POC items split by destination
-  const pocLoanAmt=parse(inp.pocDestination==="Loan Cost (C)"?inp.pocAppraisal:0)+0;
-  const pocBasisAmt=parse(inp.pocDestination==="Property Basis (B)"?inp.pocAppraisal:0)+
-    parse(inp.pocInspection)+parse(inp.pocOther);
-  // Simplified: user enters POC appraisal (usually loan cost)
-  const pocLoan=parse(inp.pocAppraisal); // goes to loan cost
-  const pocBasis=parse(inp.pocInspection)+parse(inp.pocOther); // goes to basis
+  // POC items split by destination (user selects via dropdown)
+  const pocAppraisalAmt=parse(inp.pocAppraisal);
+  const pocDestIsLoan=!inp.pocDestination||inp.pocDestination==="Loan Cost (C)";
+  const pocLoan=pocDestIsLoan?pocAppraisalAmt:0;   // → Section C loan cost
+  const pocBasis=(!pocDestIsLoan?pocAppraisalAmt:0) // → Section B basis
+    +parse(inp.pocInspection)+parse(inp.pocOther);  // inspection & other always → basis
 
   // Section C — loan costs (gross, no lender credit)
   const grossLoanCosts=hasloan?(parse(inp.originationFee)+parse(inp.discountPoints)+
@@ -1260,7 +1259,7 @@ function DepreciationCalc({lang:L="en"}){
             <MF label={"Gov't Recording Charges"} hint="HUD-1 line 1201" value={inp.recordingCharges} onChange={v=>s("recordingCharges",v)}/>
             <MF label={"State/City/County Tax Stamps"} hint="HUD-1 line 1202" value={inp.taxStamps} onChange={v=>s("taxStamps",v)}/>
             <MF label={"Transfer Taxes"} hint="HUD-1 line 1203" value={inp.transferTaxes} onChange={v=>s("transferTaxes",v)}/>
-            <MF label={"Attorney Fees (title-related, not loan)"} value={inp.attorneyFeesBasis} onChange={v=>s("attorneyFeesBasis",v)}/>
+            <MF label={"Attorney Fees (title-related, NOT loan)"} hint="Non-loan attorney work — title exam, deed prep, closing. Adds to BASIS." value={inp.attorneyFeesBasis} onChange={v=>s("attorneyFeesBasis",v)}/>
             <MF label={"Survey Fee"} hint="HUD-1 line 1301" value={inp.surveyFee} onChange={v=>s("surveyFee",v)}/>
             <MF label={"Inspections (not required by lender)"} hint="HUD-1 lines 1302–1305" value={inp.inspections} onChange={v=>s("inspections",v)}/>
             <MF label={"Appraisal (NOT required by lender)"} hint="Buyer's choice — adds to basis" value={inp.appraisalBasis} onChange={v=>s("appraisalBasis",v)}/>
@@ -1275,9 +1274,26 @@ function DepreciationCalc({lang:L="en"}){
         <SB color="#4a4a1a" tc="#d4c840" title="Paid Outside Closing (POC) — add to Loan Cost or Basis">
           <p style={{fontSize:10,color:T.textDim,margin:"0 0 8px",fontStyle:"italic"}}>{"Items paid before/outside closing. Does NOT affect cash-to-close reconciliation."}</p>
           <div style={{display:"grid",gridTemplateColumns:"1fr",gap:0}}>
-            <MF label={"Appraisal (required by lender — paid POC)"} hint="Usually goes to Loan Cost" value={inp.pocAppraisal} onChange={v=>s("pocAppraisal",v)}/>
-            <MF label={"Inspection (paid outside closing)"} hint="Goes to Property Basis" value={inp.pocInspection} onChange={v=>s("pocInspection",v)}/>
-            <MF label={"Other POC item"} hint="Goes to Property Basis" value={inp.pocOther} onChange={v=>s("pocOther",v)}/>
+            <MF label={"Appraisal paid outside closing (POC)"} hint="Required by lender → Loan Cost (C). Buyer choice, not required → Property Basis (B)." value={inp.pocAppraisal} onChange={v=>s("pocAppraisal",v)}/>
+            <div style={{marginBottom:10}}>
+              <div style={{fontSize:11,color:T.textMid,marginBottom:4}}>{"Where does this POC appraisal go?"}</div>
+              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6}}>
+                {[
+                  {v:"Loan Cost (C)",l:"Loan Cost (C)",d:"Required by lender"},
+                  {v:"Property Basis (B)",l:"Property Basis (B)",d:"Not required by lender"},
+                ].map(o=>(
+                  <button key={o.v} onClick={()=>s("pocDestination",o.v)}
+                    style={{padding:"7px 10px",borderRadius:6,cursor:"pointer",fontFamily:"inherit",textAlign:"left",
+                      background:inp.pocDestination===o.v?"rgba(200,169,110,0.1)":T.bgCard,
+                      border:"1px solid "+(inp.pocDestination===o.v?T.gold:T.border)}}>
+                    <div style={{fontSize:11,color:inp.pocDestination===o.v?T.gold:T.textMid,fontWeight:500}}>{o.l}</div>
+                    <div style={{fontSize:9,color:T.textDim}}>{o.d}</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+            <MF label={"Inspection (paid outside closing)"} hint="Adds to Property Basis (B)" value={inp.pocInspection} onChange={v=>s("pocInspection",v)}/>
+            <MF label={"Other POC item"} hint="Adds to Property Basis (B)" value={inp.pocOther} onChange={v=>s("pocOther",v)}/>
           </div>
           {(pocLoan+pocBasis)>0&&<div style={{marginTop:8,fontSize:11,color:"#a0a020"}}>
             POC → Loan Cost: <strong>{fmt(pocLoan)}</strong> · POC → Basis: <strong>{fmt(pocBasis)}</strong>
@@ -1294,7 +1310,7 @@ function DepreciationCalc({lang:L="en"}){
             <MF label={"Mortgage Insurance PMI (financed into loan)"} hint="Not upfront MIP — see Section D" value={inp.mortgageInsurancePMI} onChange={v=>s("mortgageInsurancePMI",v)}/>
             <MF label={"Assumption / Application Fee"} value={inp.assumptionFee} onChange={v=>s("assumptionFee",v)}/>
             <MF label={"Underwriting Fee"} hint="HUD-1 line 808" value={inp.underwritingFee} onChange={v=>s("underwritingFee",v)}/>
-            <MF label={"Attorney Fees (under loan section)"} hint="Loan-related attorney work" value={inp.attorneyFeeLoan} onChange={v=>s("attorneyFeeLoan",v)}/>
+            <MF label={"Attorney Fees (loan-related only)"} hint="Only if listed under loan costs on HUD-1. Amortize over loan term — NOT basis.elated attorney work" value={inp.attorneyFeeLoan} onChange={v=>s("attorneyFeeLoan",v)}/>
             <MF label={"Lender Other Charges"} value={inp.lenderOther} onChange={v=>s("lenderOther",v)}/>
           </div>
           <div style={{borderTop:"1px solid "+T.border,marginTop:10,paddingTop:10}}>
@@ -1339,7 +1355,7 @@ function DepreciationCalc({lang:L="en"}){
             <MF label={"Earnest Money Deposit"} hint="Cash paid by buyer — no basis effect" value={inp.earnestMoney} onChange={v=>s("earnestMoney",v)}/>
             <MF label={"Loan Funds (Mortgage Amount)"} hint="From lender" value={inp.loanFunds} onChange={v=>s("loanFunds",v)}/>
             <MF label={"Seller Credit / Concession"} hint="Reduces basis" credit value={inp.sellerCredit} onChange={v=>s("sellerCredit",v)}/>
-            <MF label={"Tax Adjustment Unpaid by Seller"} hint="Reduces basis + reduces cash to close" credit value={inp.taxAdjSeller} onChange={v=>s("taxAdjSeller",v)}/>
+            <MF label={"Tax Adjustment / Prorated Taxes Unpaid by Seller"} hint="Seller owes you for unpaid property taxes. Enter ONCE here — automatically reduces both your cash-to-close AND your property basis." credit value={inp.taxAdjSeller} onChange={v=>s("taxAdjSeller",v)}/>
             <MF label={"Option Fee / Option Period Credit"} hint="Buyer's own cash — reduces cash to close only" value={inp.optionFee} onChange={v=>s("optionFee",v)}/>
             <MF label={"Prorated HOA / Other Credits"} hint="Reduces basis" credit value={inp.proratedHOA} onChange={v=>s("proratedHOA",v)}/>
           </div>
