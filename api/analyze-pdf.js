@@ -25,68 +25,85 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'No PDF data provided' });
     }
 
-    const prompt = `You are a CPA expert in IRS real estate tax rules analyzing a closing statement (HUD-1 or Closing Disclosure). Categorize every line item per IRS Publication 551 (Basis of Assets) and Treasury Regulation 1.263(a). Return ONLY valid JSON — no markdown, no backticks, just the JSON object.
+    const prompt = `You are a CPA expert in IRS real estate tax rules. Analyze this closing statement (HUD-1 Settlement Statement or Closing Disclosure) and categorize every line item per IRS Publication 551 (Basis of Assets).
 
-CRITICAL IRS CLASSIFICATION RULES — follow these exactly:
+CRITICAL WARNING — HUD-1 SECTION LETTERS ARE NOT IRS TAX CATEGORIES:
+The HUD-1 form uses its own section labels (A, B, C, D, E, F, G, H, J) that have NOTHING to do with IRS tax classification.
+- HUD-1 "Section A" = loan information
+- HUD-1 "Section B" = loan amounts  
+- HUD-1 "Section C" = "Services Borrower Did Shop For" → these are CLOSING COSTS that add to property basis
+- HUD-1 "Section E" = "Services Borrower Did NOT Shop For" → mostly loan costs
+- HUD-1 "Section F" = pre-paids → deductible items
+- HUD-1 "Section G" = escrow reserves
+- HUD-1 "Section H" = other costs
 
-SECTION B (Property Cost Basis — capitalized, NOT immediately deductible):
-- attorneyFeesBasis: Attorney fees for TITLE work only (deed preparation, title exam, closing attorney NOT related to loan). If attorney fee appears in the settlement/title section of HUD-1, put here.
-- titleInsuranceLender: Lender's title insurance policy
-- titleInsuranceOwner: Owner's title insurance policy  
-- titleSearch: Title search, abstract, title exam fees
-- settlementFee: Settlement/closing fee paid to settlement agent
-- recordingCharges: Government recording charges for deed
-- taxStamps: State/city deed tax stamps
-- transferTaxes: Transfer taxes, documentary stamps
-- surveyFee: Survey fee
-- inspections: Home inspections NOT required by lender (buyer's choice)
-- appraisalBasis: Appraisal NOT required by lender (buyer's independent appraisal only)
-- otherBasis: Buyer's agent commission, home warranty, other title-related costs
+YOU MUST classify by IRS rules, NOT by the HUD-1's own section letters.
 
-SECTION C (Loan Costs — amortize over loan term, NOT basis):
-- originationFee: Loan origination fee, loan fee
-- discountPoints: Discount points, loan points
-- appraisalLender: Appraisal REQUIRED by lender and listed on HUD-1 (not paid outside closing)
+IRS TAX CLASSIFICATION RULES:
+
+SECTIONB — Property Cost Basis (capitalized, depreciated over 27.5 years):
+Anything titled "Title -" goes here UNLESS it's clearly a loan origination fee.
+- titleInsuranceLender: Any "Lender's Title Insurance" or "Title Insurance - Lender"
+- titleInsuranceOwner: Any "Owner's Title Insurance" or "Title Insurance - Owner"
+- titleSearch: Title search, title exam, title abstract
+- otherTitleFees: Title endorsement fees, title courier fee, title policy guaranty fee, title binder, Texas Policy Guaranty Fee, any other "Title -" fees
+- settlementFee: Settlement fee, closing fee, escrow fee, closing attorney fee (when in settlement section)
+- recordingCharges: Recording fee, recording service fee, government recording charges, deed recording
+- taxStamps: Documentary stamps, deed tax stamps
+- transferTaxes: Transfer tax, conveyance tax
+- surveyFee: Survey, survey fee
+- inspections: Home inspection, termite inspection, well inspection (buyer's choice, not lender-required)
+- appraisalBasis: Appraisal marked as buyer's choice or not required by lender
+- otherBasis: Courier fee, HOA transfer fee, home warranty (buyer purchased), buyer agent commission, notary fee
+
+SECTIONC — Loan Cost Basis (amortized over loan term, NOT property basis):
+ONLY items clearly related to the loan origination itself:
+- originationFee: Loan origination fee, origination charge (NOT title fees)
+- discountPoints: Loan discount, points, discount points
+- appraisalLender: Appraisal clearly marked as "required by lender" and NOT marked POC
 - creditReport: Credit report fee
-- mortgageInsurancePMI: PMI financed into loan only
-- assumptionFee: Assumption fee, application fee
-- underwritingFee: Underwriting fee, processing fee
-- attorneyFeeLoan: Attorney fees listed under LOAN COSTS section of HUD-1 only
-- lenderOther: Other lender fees (flood cert, tax service, wire fee)
-- lenderCredit: Lender credit to buyer (enter as positive number)
+- mortgageInsurancePMI: Upfront PMI or MIP financed into loan
+- assumptionFee: Assumption fee, application fee, loan application fee
+- underwritingFee: Underwriting fee, processing fee, loan processing fee
+- attorneyFeeLoan: Attorney fee listed specifically under loan origination section
+- lenderOther: Flood certification, tax service fee, wire transfer fee, lender inspection fee
+- lenderCredit: Any credit FROM the lender to borrower (enter as positive)
 
-SECTION D (Currently Deductible in year of closing):
-- propertyTaxClosing: Prorated property taxes paid AT closing (seller's share of current year taxes)
-- prepaidInterest: Prepaid mortgage interest (per diem interest from closing to month end)
-- insuranceMIP: Homeowners insurance premium + upfront MIP/PMI paid at closing
-- proratedRent: Prorated rent collected FROM seller (taxable income to buyer — positive)
+SECTIOND — Currently Deductible (deduct in year of closing on Schedule E):
+- propertyTaxClosing: Prorated property taxes that BUYER PAYS at closing (charge to buyer). Look for "County Taxes", "City Taxes", "Property Taxes" listed as a CHARGE. NOT a credit.
+- prepaidInterest: Prepaid interest, per diem interest, daily interest charge
+- insuranceMIP: Homeowners insurance premium paid at closing, upfront MIP
+- proratedRent: Rent collected from seller (income to buyer)
 
-SECTION E (Escrow/Reserves — deductible when paid out by lender):
-- escrowInsurance: Insurance escrow/impound deposit
-- escrowTax: Property tax escrow/impound deposit
-- escrowMortgageIns: Mortgage insurance escrow deposit
-- aggregateAdj: Aggregate adjustment credit (enter as positive)
+SECTIONE — Escrow Deposits (deductible only when paid out):
+- escrowInsurance: Homeowners insurance escrow/impound
+- escrowTax: Property tax escrow/impound  
+- escrowMortgageIns: Mortgage insurance escrow
+- aggregateAdj: Aggregate adjustment (always a credit — enter as positive)
 
-SECTION F (Reductions to amount due — credits and payments):
+SECTIONF — Credits and Reductions (enter all as positive numbers):
 - earnestMoney: Earnest money deposit
-- loanFunds: Loan amount/mortgage proceeds
-- sellerCredit: Seller concession/credit to buyer
-- taxAdjSeller: Tax adjustment / prorated taxes UNPAID by seller that buyer will pay later (this is a CREDIT to buyer, reduces basis — enter as positive)
-- optionFee: Option fee credit
-- proratedHOA: Prorated HOA dues or other seller credits that reduce buyer's basis
+- loanFunds: Loan amount, mortgage proceeds
+- sellerCredit: Seller concession, seller credit, seller contribution
+- taxAdjSeller: ONLY if taxes appear as a CREDIT TO BUYER from seller — meaning seller is giving buyer money for their share of unpaid taxes. Look for "Tax Proration" or "County Tax Proration" listed on the CREDIT side of the HUD-1. If it reduces amount due from buyer, it goes here. DO NOT duplicate — if tax proration is a charge, it goes in sectionD; if it's a credit, it goes here. NEVER BOTH.
+- optionFee: Option fee, option period fee
+- proratedHOA: HOA proration credit, other seller credits that reduce buyer's basis
 
-POC (Paid Outside Closing — items paid before/outside the closing):
-- pocAppraisal: Appraisal paid outside closing (POC). Use "Loan Cost (C)" if required by lender, "Property Basis (B)" if buyer's choice. Include pocDestination field.
+POC — Paid Outside Closing:
+- pocAppraisal: Appraisal marked "POC" (paid outside closing). 
+  pocDestination: Use "Property Basis (B)" if buyer paid independently; "Loan Cost (C)" only if clearly lender-required AND marked POC
 
-Return this exact structure:
-{"documentType":"HUD-1","hasloan":true,"purchasePrice":null,"sectionB":{"titleInsuranceLender":null,"titleInsuranceOwner":null,"titleSearch":null,"otherTitleFees":null,"settlementFee":null,"recordingCharges":null,"taxStamps":null,"transferTaxes":null,"attorneyFeesBasis":null,"surveyFee":null,"inspections":null,"appraisalBasis":null,"otherBasis":null},"sectionC":{"originationFee":null,"discountPoints":null,"appraisalLender":null,"creditReport":null,"mortgageInsurancePMI":null,"assumptionFee":null,"underwritingFee":null,"attorneyFeeLoan":null,"lenderOther":null,"lenderCredit":null},"sectionD":{"propertyTaxClosing":null,"prepaidInterest":null,"insuranceMIP":null,"proratedRent":null},"sectionE":{"escrowInsurance":null,"escrowTax":null,"escrowMortgageIns":null,"aggregateAdj":null},"sectionF":{"earnestMoney":null,"loanFunds":null,"sellerCredit":null,"taxAdjSeller":null,"optionFee":null,"proratedHOA":null},"poc":{"pocAppraisal":null,"pocDestination":"Loan Cost (C)"},"flags":[]}
+ADDITIONAL RULES:
+1. "Title -" prefix on any line item = ALWAYS sectionB, never sectionC
+2. Tax proration: determine if it's a CHARGE (sectionD) or CREDIT (sectionF.taxAdjSeller) — NEVER both
+3. Recording fees = always sectionB
+4. Settlement/closing fee = always sectionB  
+5. Do NOT let HUD-1 section letters influence your IRS classification
+6. All values are positive numbers (no $ or commas)
+7. Use null for items not found
 
-Additional rules:
-- All values are positive numbers only (no $ signs, no negatives, no commas)
-- null means the item was not found on this document
-- taxAdjSeller: ONLY the seller's unpaid tax proration that appears as a credit TO the buyer. Do NOT include property taxes the buyer will pay going forward.
-- Do NOT put the same amount in both sectionB and sectionC
-- Attorney fees: classify based on which SECTION of the HUD-1 they appear in — title/settlement section → attorneyFeesBasis; loan section → attorneyFeeLoan`;
+Return ONLY this JSON structure, no other text:
+{"documentType":"HUD-1","hasloan":true,"purchasePrice":null,"sectionB":{"titleInsuranceLender":null,"titleInsuranceOwner":null,"titleSearch":null,"otherTitleFees":null,"settlementFee":null,"recordingCharges":null,"taxStamps":null,"transferTaxes":null,"attorneyFeesBasis":null,"surveyFee":null,"inspections":null,"appraisalBasis":null,"otherBasis":null},"sectionC":{"originationFee":null,"discountPoints":null,"appraisalLender":null,"creditReport":null,"mortgageInsurancePMI":null,"assumptionFee":null,"underwritingFee":null,"attorneyFeeLoan":null,"lenderOther":null,"lenderCredit":null},"sectionD":{"propertyTaxClosing":null,"prepaidInterest":null,"insuranceMIP":null,"proratedRent":null},"sectionE":{"escrowInsurance":null,"escrowTax":null,"escrowMortgageIns":null,"aggregateAdj":null},"sectionF":{"earnestMoney":null,"loanFunds":null,"sellerCredit":null,"taxAdjSeller":null,"optionFee":null,"proratedHOA":null},"poc":{"pocAppraisal":null,"pocDestination":"Property Basis (B)"},"flags":[]}`
 
     const anthropicResponse = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
