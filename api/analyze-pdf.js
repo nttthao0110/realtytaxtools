@@ -25,6 +25,103 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'No PDF data provided' });
     }
 
+    const prompt = `You are a CPA expert in IRS real estate tax rules (Publication 551). Analyze this Closing Disclosure (CD) or HUD-1 Settlement Statement and categorize every line item per IRS rules.
+
+══ CRITICAL: CD/HUD-1 SECTION LETTERS ≠ IRS TAX CATEGORIES ══
+The CD uses its own sections (A, B, C, D, E, F, G, H) that have NOTHING to do with IRS tax buckets.
+- CD Section A "Origination Charges" → IRS Loan Cost (C)
+- CD Section B "Services Did NOT Shop For" → IRS Loan Cost (C), EXCEPT appraisal paid before closing goes to poc
+- CD Section C "Services DID Shop For" → Usually IRS Property Basis (B) — especially ALL "Title -" items
+- CD Section E "Taxes/Gov Fees" → IRS Property Basis (B) — recording fees always basis
+- CD Section F "Prepaids" → IRS Currently Deductible (D)
+- CD Section G "Escrow" → IRS Escrow (E)
+- CD Section H "Other" → IRS Property Basis (B) — Owner's title insurance always basis
+
+══ IRS CLASSIFICATION RULES ══
+
+SECTIONB — Property Cost Basis (capitalized, NOT deductible):
+RULE: Any line item starting with "Title -" goes here ALWAYS, regardless of which CD section it appears in.
+- titleInsuranceLender: "Title - Lender's Title Insurance" or "Lender's Title Policy"
+- titleInsuranceOwner: "Title - Owner's Title Insurance" (often in CD Section H "Other")
+- otherTitleFees: "Title - Endorsement Fee", "Title - Courier Fee", "Title - Texas Policy Guaranty Fee", "Title - Recording Service Fee", any other "Title -" item
+- settlementFee: "Title - Settlement Fee", "Closing Fee", "Escrow Fee"
+- recordingCharges: ALL recording fees from CD Section E (Deed recording + Mortgage recording combined)
+- surveyFee: Survey fee
+- inspections: Home inspection, pest inspection (buyer choice, not lender required)
+- appraisalBasis: Appraisal that is buyer's choice (not lender required) — rare
+- otherBasis: HOA transfer fee, home warranty, any other non-loan closing cost
+
+SECTIONC — Loan Cost Basis (amortize over loan term):
+ONLY items that are true loan origination costs:
+- originationFee: "Originator Compensation", "Loan Origination Fee", "Origination Points"
+- discountPoints: "Discount Points", "Loan Discount"
+- appraisalLender: Appraisal listed in CD Section B "At Closing" column (paid AT closing, not POC)
+- creditReport: "Credit Report"
+- underwritingFee: "Underwriting Fee", "Processing Fee"
+- attorneyFeeLoan: "Attorney Review Fee" listed under loan costs (CD Section B)
+- lenderOther: Flood cert, tax service fee, wire fee, other lender fees
+- lenderCredit: Lender Credits (negative number on CD = positive entry here)
+
+SECTIOND — Currently Deductible (deduct in closing year):
+- prepaidInterest: "Prepaid Interest", "Per Diem Interest" — always deductible
+- insuranceMIP: Homeowners insurance premium at closing, upfront MIP
+- propertyTaxClosing: ONLY if buyer is PAYING taxes at closing (listed as a charge to buyer, NOT an adjustment for seller's unpaid taxes)
+  ⚠ CRITICAL: "County Taxes [date] to [date]" or "Tax Proration" appearing as an ADJUSTMENT FOR ITEMS UNPAID BY SELLER → goes to sectionF.taxAdjSeller NOT here
+- proratedRent: Rent from seller to buyer (rare)
+
+SECTIONE — Escrow Deposits:
+- escrowInsurance, escrowTax, escrowMortgageIns, aggregateAdj
+
+SECTIONF — Credits to Buyer (reduce amount due):
+- earnestMoney: Deposit, Earnest Money
+- loanFunds: Loan Amount
+- sellerCredit: "Seller Credits", "Seller Concession" 
+- taxAdjSeller: "County Taxes [date] to [date]" or "City/Town Taxes [date] to [date]" listed as ADJUSTMENTS FOR ITEMS UNPAID BY SELLER — this is a credit FROM seller TO buyer for seller's share of unpaid taxes. This REDUCES property basis. Enter as positive number.
+  ⚠ CRITICAL: Tax proration adjustments for unpaid seller taxes go HERE (reduces basis), NOT in sectionD
+- optionFee: "Option Fee", "Option Period" adjustment
+- proratedHOA: HOA proration, other credits that reduce basis
+
+POC — Paid Outside Closing (does NOT affect cash-to-close):
+- pocAppraisal: Appraisal listed in "Before Closing" column of CD, or marked "(POC)" on HUD-1
+  pocDestination: "Loan Cost (C)" if lender-required; "Property Basis (B)" if buyer's choice
+
+══ SPECIFIC PATTERNS TO RECOGNIZE ══
+1. "Title - [anything]" → ALWAYS sectionB, never sectionC
+2. "Adjustments for Items Unpaid by Seller" / "County Taxes X to Y" → ALWAYS taxAdjSeller (F), never propertyTaxClosing (D)
+3. Appraisal in "Before Closing" column → ALWAYS poc, never sectionC or sectionD
+4. Recording Fees → ALWAYS sectionB.recordingCharges (combine deed + mortgage recording)
+5. Owner's Title Insurance → ALWAYS sectionB.titleInsuranceOwner
+6. Lender Credits (negative) → sectionC.lenderCredit as positive number
+
+Return ONLY this JSON (no text before or after, start with {):
+{"documentType":"CD","hasloan":true,"purchasePrice":null,"sectionB":{"titleInsuranceLender":null,"titleInsuranceOwner":null,"titleSearch":null,"otherTitleFees":null,"settlementFee":null,"recordingCharges":null,"taxStamps":null,"transferTaxes":null,"attorneyFeesBasis":null,"surveyFee":null,"inspections":null,"appraisalBasis":null,"otherBasis":null},"sectionC":{"originationFee":null,"discountPoints":null,"appraisalLender":null,"creditReport":null,"mortgageInsurancePMI":null,"assumptionFee":null,"underwritingFee":null,"attorneyFeeLoan":null,"lenderOther":null,"lenderCredit":null},"sectionD":{"propertyTaxClosing":null,"prepaidInterest":null,"insuranceMIP":null,"proratedRent":null},"sectionE":{"escrowInsurance":null,"escrowTax":null,"escrowMortgageIns":null,"aggregateAdj":null},"sectionF":{"earnestMoney":null,"loanFunds":null,"sellerCredit":null,"taxAdjSeller":null,"optionFee":null,"proratedHOA":null},"poc":{"pocAppraisal":null,"pocDestination":"Loan Cost (C)"},"flags":[]}
+`/ Vercel serverless function — proxies PDF to Anthropic API
+// API key stays server-side, never exposed to browser
+
+export default async function handler(req, res) {
+  // Only allow POST
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  // CORS headers so the frontend can call this
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) {
+    return res.status(500).json({ 
+      error: 'API key not configured. Add ANTHROPIC_API_KEY to Vercel environment variables.' 
+    });
+  }
+
+  try {
+    const { base64, mediaType } = req.body;
+    
+    if (!base64) {
+      return res.status(400).json({ error: 'No PDF data provided' });
+    }
+
     const prompt = `You are a CPA expert in IRS real estate tax rules. Analyze this closing statement (HUD-1 Settlement Statement or Closing Disclosure) and categorize every line item per IRS Publication 551 (Basis of Assets).
 
 CRITICAL WARNING — HUD-1 SECTION LETTERS ARE NOT IRS TAX CATEGORIES:
