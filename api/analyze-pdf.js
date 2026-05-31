@@ -102,7 +102,11 @@ ADDITIONAL RULES:
 6. All values are positive numbers (no $ or commas)
 7. Use null for items not found
 
-Return ONLY this JSON structure, no other text:
+CRITICAL: Your response must start with { and end with }. 
+Do not write ANY text before or after the JSON.
+Do not write "I'll analyze..." or any explanation.
+Do not use markdown code blocks.
+Your ENTIRE response must be valid JSON starting with {:
 {"documentType":"HUD-1","hasloan":true,"purchasePrice":null,"sectionB":{"titleInsuranceLender":null,"titleInsuranceOwner":null,"titleSearch":null,"otherTitleFees":null,"settlementFee":null,"recordingCharges":null,"taxStamps":null,"transferTaxes":null,"attorneyFeesBasis":null,"surveyFee":null,"inspections":null,"appraisalBasis":null,"otherBasis":null},"sectionC":{"originationFee":null,"discountPoints":null,"appraisalLender":null,"creditReport":null,"mortgageInsurancePMI":null,"assumptionFee":null,"underwritingFee":null,"attorneyFeeLoan":null,"lenderOther":null,"lenderCredit":null},"sectionD":{"propertyTaxClosing":null,"prepaidInterest":null,"insuranceMIP":null,"proratedRent":null},"sectionE":{"escrowInsurance":null,"escrowTax":null,"escrowMortgageIns":null,"aggregateAdj":null},"sectionF":{"earnestMoney":null,"loanFunds":null,"sellerCredit":null,"taxAdjSeller":null,"optionFee":null,"proratedHOA":null},"poc":{"pocAppraisal":null,"pocDestination":"Property Basis (B)"},"flags":[]}`
 
     const anthropicResponse = await fetch('https://api.anthropic.com/v1/messages', {
@@ -140,14 +144,27 @@ Return ONLY this JSON structure, no other text:
     }
 
     const data = await anthropicResponse.json();
-    const text = data.content
+    const rawText = data.content
       .map(block => block.type === 'text' ? block.text : '')
-      .join('')
-      .replace(/```json\n?/g, '')
-      .replace(/```/g, '')
-      .trim();
+      .join('');
 
-    const parsed = JSON.parse(text);
+    // Strip anything before the first { and after the last }
+    // This handles cases where the AI adds text like "I'll analyze..." before the JSON
+    const firstBrace = rawText.indexOf('{');
+    const lastBrace = rawText.lastIndexOf('}');
+    if (firstBrace === -1 || lastBrace === -1) {
+      return res.status(500).json({ error: 'AI did not return valid JSON. Please try again or enter values manually.' });
+    }
+    const text = rawText.slice(firstBrace, lastBrace + 1);
+    
+    let parsed;
+    try {
+      parsed = JSON.parse(text);
+    } catch(parseErr) {
+      console.error('JSON parse error:', parseErr.message);
+      console.error('Raw text:', rawText.slice(0, 500));
+      return res.status(500).json({ error: 'Could not parse AI response. Please try again or enter values manually.' });
+    }
     return res.status(200).json(parsed);
 
   } catch (err) {
