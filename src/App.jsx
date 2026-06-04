@@ -3904,7 +3904,7 @@ function EmailCapture({lang="en"}){
     setStatus("sending");
     try{
       // Try ConvertKit form (replace FORM_ID with your actual ConvertKit form ID)
-      const CONVERTKIT_FORM_ID = "YOUR_FORM_ID"; // Set this in ConvertKit
+      const CONVERTKIT_FORM_ID = "9521295"; // Set this in ConvertKit
       const res = await fetch("https://app.convertkit.com/forms/"+CONVERTKIT_FORM_ID+"/subscriptions",{
         method:"POST",
         headers:{"Content-Type":"application/json"},
