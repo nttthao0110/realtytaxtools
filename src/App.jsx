@@ -55,7 +55,7 @@ function getThreshold(fs){return fs==="mfs"?75000:150000;}
 const LANG={
   en:{
     code:"EN",
-    nav:{home:"Home",calculators:"Calculators",blog:"Blog",pricing:"Pricing",shop:"Shop",about:"About",privacy:"Privacy Policy"},
+    nav:{home:"Home",calculators:"Calculators",blog:"Blog",shop:"Shop",about:"About",privacy:"Privacy Policy"},
     hero:{
       eyebrow:"Real Estate Tax Tools · Built by a CPA",
       h1a:"Stop Overpaying.", h1b:"Start Calculating.",
