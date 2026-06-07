@@ -1302,7 +1302,7 @@ function QuickMode({inp,s,fmt,pct,quickBasis,quickLandR,quickBuilding,quickDepr,
         </div>
       )}
       <p style={{fontSize:9,color:T.textDim,textAlign:"center",margin:"4px 0 10px"}}>
-        {"Estimate only — 27.5yr straight-line. For full HUD-1 analysis use Detailed Mode."}
+        {"IRS straight-line method (27.5yr MACRS). Same formula CPAs use — just enter 3 numbers. For full HUD-1 analysis use Detailed Mode."}
       </p>
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
         <button onClick={()=>setMode("detail")}
