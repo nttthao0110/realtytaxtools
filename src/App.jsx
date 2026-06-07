@@ -128,7 +128,7 @@ const LANG={
   },
   es:{
     code:"ES",
-    nav:{home:"Inicio",calculators:"Calculadoras",blog:"Blog",pricing:"Precios",shop:"Tienda",about:"Sobre Mí"},
+    nav:{home:"Inicio",calculators:"Calculadoras",blog:"Blog",shop:"Tienda",about:"Sobre Mí"},
     hero:{
       eyebrow:"Herramientas de Impuestos Inmobiliarios · Por una CPA",
       h1a:"Deja de Pagar de Más.", h1b:"Empieza a Calcular.",
