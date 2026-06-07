@@ -4335,7 +4335,6 @@ function PrivacyPage(){
         </div>
       ))}
     </div>
-   </>
   );
 }
 
