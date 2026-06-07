@@ -4161,9 +4161,10 @@ export default function App(){
           <button onClick={()=>nav("privacy")} style={{background:"none",border:"none",color:T.textDim,cursor:"pointer",fontSize:10,fontFamily:"inherit",textDecoration:"underline",marginTop:4}}>{"Privacy Policy"}</button></p>
         </div>
       </footer>
-    </div>
-  );
-}
+         </div>
+    </>
+    );
+  }
 // ── PRICING PAGE ─────────────────────────────────────────────────────────────
 function PricingPage({lang="en",setPage}){
   const [annually,setAnnually]=useState(false);
