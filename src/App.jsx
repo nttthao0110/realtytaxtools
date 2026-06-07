@@ -1554,7 +1554,7 @@ function DepreciationCalc({lang:L="en"}){
       {/* Mode toggle — only on step 0 */}
       {(mode==="quick"||step===0)&&(
         <div style={{display:"flex",gap:4,marginBottom:12,padding:"3px",background:T.bgCard,borderRadius:8,border:"1px solid "+T.border}}>
-          {[{v:"quick",l:"⚡ Quick",d:"3 fields"},{v:"detail",l:"📋 Detailed",d:"Full HUD-1"}].map(m=>(
+          {[{v:"quick",l:"⚡ Quick Estimate",d:"Most investors start here"},{v:"detail",l:"📋 Exact (HUD-1)",d:"Upload closing disclosure"}].map(m=>(
             <button key={m.v} onClick={()=>{setMode(m.v);setStep(0);}}
               style={{flex:1,padding:"7px",borderRadius:6,cursor:"pointer",fontFamily:"inherit",border:"none",
                 background:mode===m.v?"linear-gradient(135deg,"+T.gold+","+T.goldLight+")":T.bgCard2,
