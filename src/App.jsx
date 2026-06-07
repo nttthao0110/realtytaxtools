@@ -4093,13 +4093,14 @@ export default function App(){
   const blogMatch=page.match(/^blog-(\d+)$/);
   const blogIdx=blogMatch?parseInt(blogMatch[1]):null;
 
-  return(
-    <div style={{background:"#c07050",color:"#fff",textAlign:"center",padding:"8px 16px",fontSize:"13px",fontWeight:"600"}}>
-  ⚠️ June 16 IRS Estimated Tax Deadline — Check your safe harbor now at the Underpayment Penalty Calculator below
-</div>
-    <div style={{minHeight:"100vh",background:T.bg,color:T.text,
-      fontFamily:"'Palatino Linotype','Book Antiqua',Palatino,Georgia,serif",
-      opacity:animated?1:0,transition:"opacity 0.5s ease"}}>
+ return(
+  <>
+  <div style={{background:"#c07050",color:"#fff",textAlign:"center",padding:"8px 16px",fontSize:"13px",fontWeight:"600"}}>
+    ⚠️ June 16 IRS Estimated Tax Deadline — Check your safe harbor now at the free Underpayment Penalty Calculator below
+  </div>
+  <div style={{minHeight:"100vh",background:T.bg,color:T.text,
+        fontFamily:"'Palatino Linotype','Book Antiqua',Palatino,Georgia,serif",
+        opacity:animated?1:0,transition:"opacity 0.5s ease"}}>
       <div style={{position:"fixed",inset:0,zIndex:0,pointerEvents:"none",
         background:`radial-gradient(ellipse at 10% 20%,rgba(200,169,110,0.04) 0%,transparent 50%),radial-gradient(ellipse at 90% 80%,rgba(74,111,168,0.04) 0%,transparent 50%)`}}/>
 
@@ -4333,6 +4334,7 @@ function PrivacyPage(){
         </div>
       ))}
     </div>
+   </>
   );
 }
 
