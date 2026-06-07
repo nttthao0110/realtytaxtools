@@ -92,7 +92,7 @@ const LANG={
   },
   vi:{
     code:"VI",
-    nav:{home:"Trang Chủ",calculators:"Công Cụ",blog:"Bài Viết",pricing:"Bảng Giá",shop:"Tài Liệu",about:"Giới Thiệu"},
+    nav:{home:"Trang Chủ",calculators:"Công Cụ",blog:"Bài Viết",shop:"Tài Liệu",about:"Giới Thiệu"},
     hero:{
       eyebrow:"Công Cụ Thuế Bất Động Sản · Được Tạo Bởi CPA",
       h1a:"Ngừng Nộp Thừa.", h1b:"Bắt Đầu Tính Toán.",
