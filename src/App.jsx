@@ -4094,6 +4094,9 @@ export default function App(){
   const blogIdx=blogMatch?parseInt(blogMatch[1]):null;
 
   return(
+    <div style={{background:"#c07050",color:"#fff",textAlign:"center",padding:"8px 16px",fontSize:"13px",fontWeight:"600"}}>
+  ⚠️ June 16 IRS Estimated Tax Deadline — Check your safe harbor now at the Underpayment Penalty Calculator below
+</div>
     <div style={{minHeight:"100vh",background:T.bg,color:T.text,
       fontFamily:"'Palatino Linotype','Book Antiqua',Palatino,Georgia,serif",
       opacity:animated?1:0,transition:"opacity 0.5s ease"}}>
