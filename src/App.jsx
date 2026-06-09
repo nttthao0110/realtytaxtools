@@ -2547,6 +2547,53 @@ function CapGainsCalc({lang:L="en"}){
   );
 }
 
+function CapGainsSEOBlock(){
+  return(
+    <div style={{maxWidth:800,margin:"40px auto 0",padding:"0 20px 40px"}}>
+      <h2 style={{fontSize:22,fontWeight:400,color:T.text,marginBottom:16,borderBottom:"1px solid "+T.border,paddingBottom:12}}>
+        {"How Capital Gains Tax Works on Rental Property Sales"}
+      </h2>
+      {[
+        "When you sell a rental property, your taxable gain is usually much higher than most investors expect. The IRS does not calculate gain using your original purchase price alone — gain is based on your adjusted basis, which equals your purchase price plus capital improvements and certain basis-adding closing costs, minus all accumulated depreciation claimed during ownership.",
+        "For example, suppose you purchased a rental property for $300,000, made $20,000 in capital improvements, and claimed $80,000 in depreciation over the years. Your adjusted basis is $240,000. If you sell for $400,000, your taxable gain is $160,000 — not the $100,000 appreciation most investors expect.",
+        "A rental property sale may generate up to four different types of taxable income. Depreciation claimed on personal property or cost segregation assets is subject to Section 1245 recapture, taxed at ordinary income rates up to 37%. Depreciation claimed on the building structure is taxed as unrecaptured Section 1250 gain at a maximum federal rate of 25%. Any remaining appreciation is taxed as long-term capital gain at 0%, 15%, or 20% depending on your income. Higher-income taxpayers may also owe the 3.8% Net Investment Income Tax on top of all three.",
+        "One of the most important concepts for investors: the IRS applies recapture rules to depreciation that was claimed or allowable. Failing to claim depreciation does not eliminate future recapture tax — you owe it either way. Unlike basic capital gains calculators that only show sale price minus purchase price, this calculator estimates all four components separately: Section 1245 recapture, unrecaptured Section 1250 gain, long-term capital gain, and NIIT.",
+      ].map((p,i)=>(
+        <p key={i} style={{fontSize:14,color:T.textMid,lineHeight:1.7,marginBottom:14}}>{p}</p>
+      ))}
+      <h2 style={{fontSize:22,fontWeight:400,color:T.text,margin:"32px 0 16px",borderBottom:"1px solid "+T.border,paddingBottom:12}}>
+        {"Frequently Asked Questions"}
+      </h2>
+      {[
+        {q:"Why is part of my gain taxed as ordinary income?",
+         a:"If you claimed depreciation on personal property through cost segregation or bonus depreciation, that gain is recaptured as Section 1245 gain and taxed at ordinary income rates — up to 37%. This is separate from the 25% cap on building depreciation recapture and can significantly increase your total tax bill at sale."},
+        {q:"What is unrecaptured Section 1250 gain?",
+         a:"Unrecaptured Section 1250 gain is the depreciation you claimed on the building structure (27.5-year MACRS). It is taxed at a maximum federal rate of 25% regardless of your income bracket. This is the largest recapture item for most landlords and applies even if your long-term capital gains rate is 0% or 15%."},
+        {q:"How do I calculate my adjusted basis when I sell?",
+         a:"Adjusted basis = purchase price + basis-adding closing costs + capital improvements - accumulated depreciation. Example: $300K purchase + $20K improvements - $80K depreciation = $240K adjusted basis. Sell for $400K = $160K total gain, broken into recapture and capital gain components."},
+        {q:"Can I avoid capital gains tax with a 1031 exchange?",
+         a:"A 1031 like-kind exchange may defer capital gains and depreciation recapture if all exchange requirements are met and no taxable boot is received. You must identify a replacement property within 45 days of closing and complete the purchase within 180 days. A Qualified Intermediary must hold all funds — touching the proceeds disqualifies the entire exchange."},
+        {q:"What is the primary residence exclusion for rental property?",
+         a:"If you lived in the property as your primary residence for at least 2 of the last 5 years before sale, you may exclude up to $250,000 of gain ($500,000 married filing jointly) from federal capital gains tax. However, this exclusion does not apply to depreciation recapture — you still owe Section 1245 and Section 1250 recapture tax on all depreciation claimed during the rental period."},
+        {q:"What are the 2025 long-term capital gains rates?",
+         a:"For 2025: 0% for taxable income up to $48,350 (single) or $96,700 (MFJ); 15% up to $533,400 (single) or $600,050 (MFJ); 20% above those thresholds. Short-term gains are taxed at ordinary income rates. These rates apply only to long-term capital gain — Section 1245 and Section 1250 recapture have their own rates regardless of bracket."},
+        {q:"Do I owe state tax on top of federal capital gains tax?",
+         a:"Most states tax capital gains as ordinary income. Texas has no state income tax, so Texas residents owe federal tax only. California taxes capital gains up to 13.3%. New York up to 10.9%. This calculator estimates federal tax only — always check your state rules before selling."},
+        {q:"What if I forgot to claim depreciation — do I still owe recapture tax?",
+         a:"Yes. The IRS taxes depreciation that was allowed or allowable — meaning even if you never claimed depreciation, you still owe recapture tax on what you could have claimed. If you missed depreciation deductions, file Form 3115 (Change in Accounting Method) to catch up before you sell. A CPA can calculate your correct accumulated depreciation."},
+      ].map((f,i)=>(
+        <div key={i} style={{marginBottom:20,padding:"16px",background:T.bgCard,borderRadius:8,border:"1px solid "+T.border}}>
+          <p style={{fontSize:14,fontWeight:600,color:T.gold,margin:"0 0 8px"}}>{f.q}</p>
+          <p style={{fontSize:13,color:T.textMid,lineHeight:1.7,margin:0}}>{f.a}</p>
+        </div>
+      ))}
+      <p style={{fontSize:11,color:T.textDim,textAlign:"center",marginTop:24}}>
+        {"For informational purposes only. Not tax advice. Consult a licensed CPA before filing."}
+      </p>
+    </div>
+  );
+}
+
 function STRCalc({lang:L="en"}){
   const [inp,setInp]=useState({
     rentalDays:"",personalDays:"",
@@ -3787,7 +3834,7 @@ function CalcWrapper({id,lang}){
   switch(id){
     case "underpayment": return <UnderpaymentCalc lang={lang}/>;
     case "depreciation": return <><DepreciationCalc lang={lang}/><DepreciationSEOBlock/></>;
-    case "capitalgains": return <CapGainsCalc lang={lang}/>;
+    case "capitalgains": return <><CapGainsCalc lang={lang}/><CapGainsSEOBlock/></>;
     case "str":          return <STRCalc lang={lang}/>;
     case "exchange1031": return <Exchange1031Calc lang={lang}/>;
     case "costseg": return <CostSegCalc lang={lang}/>;
