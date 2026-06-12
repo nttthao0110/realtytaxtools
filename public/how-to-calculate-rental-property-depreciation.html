@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>How to Calculate Rental Property Depreciation (Step-by-Step) | RealtyTaxTools</title>
+  <meta name="description" content="Learn how to calculate rental property depreciation using IRS rules. Covers depreciable basis, land allocation, mid-month convention, common mistakes, and Schedule E reporting. Free calculator included."/>
+  <meta name="robots" content="index, follow"/>
+  <link rel="canonical" href="https://realtytaxtools.com/blog/how-to-calculate-rental-property-depreciation.html"/>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7M3QK9XD6E"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-7M3QK9XD6E');</script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+    {"@type":"Question","name":"What if I don't know the land value?","acceptedAnswer":{"@type":"Answer","text":"Use your county property tax assessor's allocation between land and improvements. If the assessor's card shows land at 20% of total assessed value, use 20%. The IRS requires only that the allocation be reasonable and documented."}},
+    {"@type":"Question","name":"Can I depreciate a property I bought with a mortgage?","acceptedAnswer":{"@type":"Answer","text":"Yes. Depreciation is based on your full cost basis, not your equity. A $300,000 property bought with $60,000 down is still depreciated on the full building portion of $300,000 plus qualifying closing costs. The mortgage does not reduce your depreciable basis."}},
+    {"@type":"Question","name":"What happens to depreciation when I sell?","acceptedAnswer":{"@type":"Answer","text":"All depreciation claimed — or allowed — is subject to depreciation recapture tax at a maximum 25% under Section 1250, regardless of hold period. A 1031 exchange defers this recapture by rolling your reduced basis into a replacement property."}},
+    {"@type":"Question","name":"What is the mid-month convention?","acceptedAnswer":{"@type":"Answer","text":"The IRS treats all residential rental property as placed in service at the midpoint of the month, regardless of actual day. A property placed in service March 3 or March 28 both receive the same first-year depreciation."}},
+    {"@type":"Question","name":"Do I need Form 4562 every year?","acceptedAnswer":{"@type":"Answer","text":"Only in the first year and any year you place new assets in service. In other years, report prior-year depreciation directly on Schedule E. Most tax software handles this automatically."}}
+  ]}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"HowTo","name":"How to Calculate Rental Property Depreciation","description":"Step-by-step guide to calculating rental property depreciation using IRS rules.","step":[
+    {"@type":"HowToStep","name":"Determine your depreciable basis","text":"Start with the purchase price. Add qualifying closing costs (title insurance, recording fees, settlement fees, transfer taxes). Subtract the land value using the county assessor allocation or an appraisal."},
+    {"@type":"HowToStep","name":"Apply the 27.5-year schedule","text":"Divide your depreciable basis by 27.5 to get your full-year deduction. In the first year, apply the mid-month convention based on which month the property was placed in service."},
+    {"@type":"HowToStep","name":"Report on Schedule E","text":"Enter your annual depreciation on IRS Schedule E, Part I, Line 18. File Form 4562 in the first year and any year you place new assets in service."}
+  ]}
+  </script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{background:#07080a;color:#e8e4dc;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:16px;line-height:1.7}
+    nav{background:#0d0f12;border-bottom:1px solid #1c2028;padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    .nav-logo{color:#c8a96e;font-weight:700;font-size:15px;text-decoration:none;letter-spacing:.04em}
+    .nav-links{display:flex;gap:24px}
+    .nav-links a{color:#8a8478;font-size:13px;text-decoration:none}
+    .nav-links a:hover{color:#e8e4dc}
+    .container{max-width:760px;margin:0 auto;padding:48px 24px 80px}
+    .breadcrumb{font-size:12px;color:#3a3830;margin-bottom:32px}
+    .breadcrumb a{color:#7a6540;text-decoration:none}
+    .breadcrumb a:hover{color:#c8a96e}
+    .breadcrumb span{margin:0 6px}
+    .article-tag{font-size:11px;color:#c8a96e;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+    h1{font-size:32px;font-weight:400;color:#e8e4dc;line-height:1.3;margin-bottom:16px}
+    .article-meta{font-size:12px;color:#3a3830;margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid #1c2028}
+    .article-meta strong{color:#7a6540}
+    h2{font-size:22px;font-weight:400;color:#e8e4dc;margin:40px 0 16px;padding-bottom:10px;border-bottom:1px solid #1c2028}
+    h3{font-size:16px;font-weight:600;color:#c8a96e;margin:28px 0 10px;letter-spacing:.03em}
+    p{color:#8a8478;margin-bottom:16px}
+    strong{color:#e8e4dc}
+    a{color:#c8a96e}
+    a:hover{color:#e8c98e}
+    ul{color:#8a8478;padding-left:24px;margin-bottom:16px}
+    li{margin-bottom:8px}
+    .callout{background:#0d0f12;border:1px solid #1c2028;border-left:3px solid #c8a96e;border-radius:6px;padding:20px 24px;margin:28px 0}
+    .callout p{margin-bottom:0}
+    .callout strong{color:#c8a96e}
+    .warning{background:#130a08;border:1px solid #1c2028;border-left:3px solid #c07050;border-radius:6px;padding:20px 24px;margin:28px 0}
+    .warning p{margin-bottom:0;color:#c07050}
+    table{width:100%;border-collapse:collapse;margin:24px 0;font-size:14px}
+    th{background:#0d0f12;color:#c8a96e;font-weight:500;text-align:left;padding:10px 14px;border-bottom:1px solid #1c2028;font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+    td{padding:10px 14px;border-bottom:1px solid #1c2028;color:#8a8478}
+    td:first-child{color:#e8e4dc}
+    tr:last-child td{border-bottom:none}
+    tr:nth-child(even) td{background:#0a0c0f}
+    .cta{background:linear-gradient(135deg,#0d1520ee,#0a1015ee);border:1px solid #2a3040;border-radius:10px;padding:32px;text-align:center;margin:48px 0}
+    .cta h3{color:#c8a96e;font-size:18px;margin-bottom:10px;letter-spacing:0;text-transform:none}
+    .cta p{font-size:14px;margin-bottom:20px}
+    .cta a.btn{display:inline-block;padding:12px 28px;background:linear-gradient(135deg,#c8a96e,#e8c98e);color:#050608;font-weight:700;font-size:14px;border-radius:6px;text-decoration:none;letter-spacing:.04em}
+    .faq-item{background:#0d0f12;border:1px solid #1c2028;border-radius:8px;padding:20px;margin-bottom:14px}
+    .faq-item h3{color:#c8a96e;font-size:14px;margin:0 0 10px;letter-spacing:0;text-transform:none}
+    .faq-item p{font-size:13px;margin-bottom:0}
+    .internal-links{margin:32px 0;padding:20px 24px;background:#0a0c0f;border:1px solid #1c2028;border-radius:8px}
+    .internal-links p{font-size:13px;color:#7a6540;margin-bottom:8px;font-style:italic}
+    .internal-links a{display:block;font-size:13px;color:#2e75b6;margin-bottom:4px}
+    .credibility{background:#0d0f12;border:1px solid #1c2028;border-radius:8px;padding:24px;margin-top:48px}
+    .credibility h3{color:#c8a96e;font-size:13px;margin-bottom:10px;letter-spacing:0;text-transform:none}
+    .credibility p{font-size:12px;margin-bottom:8px}
+    .credibility p:last-child{margin-bottom:0}
+    footer{border-top:1px solid #1c2028;padding:32px 24px;text-align:center;font-size:12px;color:#3a3830}
+    footer a{color:#7a6540;text-decoration:none}
+  </style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="https://realtytaxtools.com">RealtyTaxTools</a>
+  <div class="nav-links">
+    <a href="https://realtytaxtools.com">Calculators</a>
+    <a href="/blog">Blog</a>
+  </div>
+</nav>
+<div class="container">
+  <div class="breadcrumb"><a href="https://realtytaxtools.com">Home</a><span>›</span><a href="/blog">Blog</a><span>›</span>How to Calculate Rental Property Depreciation</div>
+  <div class="article-tag">Depreciation · Tax Strategy</div>
+  <h1>How to Calculate Rental Property Depreciation (Step-by-Step)</h1>
+  <div class="article-meta">By <strong>RealtyTaxTools CPA Team</strong> &nbsp;·&nbsp; Updated June 2025 &nbsp;·&nbsp; 10 min read</div>
+
+  <p>Rental property depreciation is one of the most valuable tax deductions available to real estate investors — and one of the most commonly miscalculated. A $350,000 rental property can generate over $10,000 in annual depreciation deductions, sheltering rental income from tax every year for 27.5 years. Yet many landlords either skip it entirely, calculate it on the wrong basis, or miss closing costs that should be added to the depreciable amount.</p>
+  <p>This guide walks through exactly how the IRS requires depreciation to be calculated, what belongs in your depreciable basis, common mistakes to avoid, and how to report it correctly on Schedule E.</p>
+
+  <div class="callout"><p><strong>Bottom line:</strong> Depreciation is calculated on the building value only (not land), using a 27.5-year straight-line schedule, starting in the month the property was placed in service. Most investors deduct roughly 3.6% of their building basis per year.</p></div>
+
+  <h2>What Is Rental Property Depreciation?</h2>
+  <p>The IRS recognizes that buildings wear out over time. Depreciation is the tax deduction that reflects this wear — it lets you recover the cost of the building over its "useful life." For residential rental property, the IRS sets that useful life at 27.5 years.</p>
+  <p>Depreciation is a <strong>non-cash deduction</strong>. You don't write a check for it — it's calculated each year and deducted on Schedule E against your rental income. Even if your property appreciates in market value, you still get the deduction every year.</p>
+
+  <h2>Step 1 — Determine Your Depreciable Basis</h2>
+  <p>Your depreciable basis starts with the purchase price but requires several adjustments before you can calculate the annual deduction.</p>
+  <h3>Start with the purchase price</h3>
+  <p>Use the amount paid at closing. If you paid $320,000, that's your starting point.</p>
+  <h3>Add qualifying closing costs</h3>
+  <p>These closing costs increase your basis and must be added:</p>
+  <ul>
+    <li>Title insurance (lender and owner policies)</li>
+    <li>Attorney or settlement fees</li>
+    <li>Recording fees</li>
+    <li>Transfer taxes paid by the buyer</li>
+    <li>Survey fees</li>
+    <li>Appraisal fees (if required for purchase)</li>
+  </ul>
+  <p>These costs do <strong>NOT</strong> add to basis: prepaid interest, property tax prorations, and loan origination fees (points).</p>
+  <h3>Subtract the land value — the step most investors skip</h3>
+  <p>Land does not depreciate. You must allocate a portion of your total basis to land and exclude it. The IRS requires a "reasonable" allocation. Common methods:</p>
+  <ul>
+    <li><strong>County assessor allocation</strong> — use the land-to-improvement ratio from your property tax card</li>
+    <li><strong>Independent appraisal</strong> — most defensible for high-value properties</li>
+    <li><strong>Purchase contract allocation</strong> — if the contract separates land and building values</li>
+  </ul>
+  <p><strong>Example — IRS basis allocation:</strong></p>
+  <table>
+    <thead><tr><th>Item</th><th>Amount</th></tr></thead>
+    <tbody>
+      <tr><td>Purchase price</td><td>$320,000</td></tr>
+      <tr><td>+ Title insurance</td><td>$1,200</td></tr>
+      <tr><td>+ Settlement fees</td><td>$800</td></tr>
+      <tr><td>+ Recording fees</td><td>$200</td></tr>
+      <tr><td>= Adjusted total basis</td><td>$322,200</td></tr>
+      <tr><td>County assessor: land = 20%</td><td>× 80% building</td></tr>
+      <tr><td><strong>= Depreciable basis</strong></td><td><strong>$257,760</strong></td></tr>
+    </tbody>
+  </table>
+
+  <h2>Step 2 — Apply the 27.5-Year Schedule</h2>
+  <p>Annual depreciation rate: 1/27.5 = <strong>3.636%</strong> of your depreciable basis. The first and last year use the <strong>mid-month convention</strong> — partial year based on which month the property was placed in service.</p>
+  <p><strong>Formula:</strong> First Year = (Basis ÷ 27.5) × Months Remaining from mid-month ÷ 12</p>
+  <table>
+    <thead><tr><th>Month Placed in Service</th><th>First Year % of Annual</th></tr></thead>
+    <tbody>
+      <tr><td>January</td><td>95.8%</td></tr>
+      <tr><td>March</td><td>79.2%</td></tr>
+      <tr><td>June</td><td>54.2%</td></tr>
+      <tr><td>September</td><td>29.2%</td></tr>
+      <tr><td>December</td><td>4.2%</td></tr>
+    </tbody>
+  </table>
+  <p><strong>Example — $257,760 basis, placed in service March:</strong></p>
+  <ul>
+    <li>Full year: $257,760 ÷ 27.5 = <strong>$9,373</strong></li>
+    <li>First year (March): $9,373 × 79.2% = <strong>$7,423</strong></li>
+    <li>Years 2–27: <strong>$9,373/year</strong> — $257,760 fully recovered over 27.5 years</li>
+  </ul>
+
+  <h2>Step 3 — Report on Schedule E</h2>
+  <p>Annual depreciation is reported on <strong>IRS Schedule E (Form 1040)</strong>, Part I, Line 18. File <strong>Form 4562</strong> in the first year and any year new assets are placed in service.</p>
+  <div class="callout"><p><strong>Critical:</strong> Even if you don't claim depreciation, the IRS assumes you did when you sell. Recapture tax (25%) applies to all depreciation that was <em>allowable</em> — whether or not you actually took it. Always claim it.</p></div>
+
+  <h2>5 Common Depreciation Mistakes</h2>
+  <h3>Mistake 1 — Using equity instead of purchase price</h3>
+  <p>If you bought a $300,000 property with $60,000 down, you depreciate the full building value of $300,000 (minus land) — not just your $60,000 equity. The mortgage does not reduce your depreciable basis.</p>
+  <h3>Mistake 2 — Skipping closing costs</h3>
+  <p>Title insurance, settlement fees, and recording fees increase your basis. On a $300,000 purchase these often add $2,000–$5,000 — translating to $70–$180 in additional annual deductions missed for 27.5 years.</p>
+  <h3>Mistake 3 — Wrong land allocation</h3>
+  <p>Using 0% for land is not allowed. Always document your allocation method. The county assessor ratio is the most defensible — download your property card and keep it in your records.</p>
+  <h3>Mistake 4 — Not depreciating capital improvements separately</h3>
+  <p>A new roof or HVAC starts its own 27.5-year schedule in the month placed in service — not added to the original schedule. Investors who bundle improvements into the original basis understate deductions and create reconciliation problems at sale.</p>
+  <h3>Mistake 5 — Stopping depreciation after mortgage payoff</h3>
+  <p>Depreciation continues for 27.5 years from the placed-in-service date regardless of mortgage payoff. A fully paid-off rental still generates a depreciation deduction every year.</p>
+
+  <h2>What About Capital Improvements?</h2>
+  <p>Capital improvements are depreciated separately on their own 27.5-year schedules. Keep a log of every improvement with the date placed in service, description, and cost.</p>
+  <p><strong>Example:</strong> A $15,000 roof replacement placed in service in August starts its own 27.5-year schedule. Annual deduction: $15,000 ÷ 27.5 = $545/year, adjusted for the mid-month convention in Year 1.</p>
+
+  <h2>Cost Segregation: Accelerating Your Deductions</h2>
+  <p>Cost segregation reclassifies building components into 5-, 7-, or 15-year categories, front-loading deductions significantly. Studies typically cost $5,000–$15,000 and are most cost-effective on properties $400,000+. For real estate professionals or STR investors who materially participate, deductions can offset W-2 income in Year 1.</p>
+
+  <div class="internal-links">
+    <p>Related calculators on RealtyTaxTools:</p>
+    <a href="https://realtytaxtools.com/?calc=costseg">→ Free Cost Segregation Estimator</a>
+    <a href="https://realtytaxtools.com/?calc=capitalgains">→ Free Capital Gains Calculator — see your recapture tax at sale</a>
+    <a href="https://realtytaxtools.com/?calc=exchange1031">→ Free 1031 Exchange Calculator — defer recapture tax</a>
+  </div>
+
+  <div class="cta">
+    <h3>Calculate Your Rental Property Depreciation Free</h3>
+    <p>Enter your purchase price and closing disclosure — our calculator handles land allocation, mid-month convention, and basis automatically.</p>
+    <a class="btn" href="https://realtytaxtools.com/?calc=depreciation">Use the Free Depreciation Calculator →</a>
+  </div>
+
+  <h2>Frequently Asked Questions</h2>
+  <div class="faq-item"><h3>What if I don't know the land value?</h3><p>Use your county property tax assessor's allocation between land and improvements. If the assessor's card shows land at 20% of total assessed value, use 20%. The IRS requires only that the allocation be reasonable and documented.</p></div>
+  <div class="faq-item"><h3>Can I depreciate a property I bought with a mortgage?</h3><p>Yes. Depreciation is based on your full cost basis, not your equity. A $300,000 property bought with $60,000 down is still depreciated on the full building portion of $300,000 plus qualifying closing costs.</p></div>
+  <div class="faq-item"><h3>What happens to depreciation when I sell?</h3><p>All depreciation claimed — or allowed — is subject to recapture tax at a maximum 25% under Section 1250. A 1031 exchange defers this by rolling your reduced basis into a replacement property.</p></div>
+  <div class="faq-item"><h3>What is the mid-month convention?</h3><p>The IRS treats all residential rental property as placed in service at the midpoint of the month. A property placed in service March 3 or March 28 both receive the same first-year depreciation.</p></div>
+  <div class="faq-item"><h3>Do I need Form 4562 every year?</h3><p>Only in the first year and any year you place new assets in service. In other years, report prior-year depreciation directly on Schedule E. Most tax software handles this automatically.</p></div>
+
+  <div class="credibility">
+    <h3>Why These Calculations Matter</h3>
+    <p>Tax calculators provide estimates only. Actual results depend on your filing status, income level, passive activity limitations, state tax rules, and other factors.</p>
+    <p>RealtyTaxTools was built by a licensed CPA to help investors understand common real estate tax calculations using IRS rules and publicly available guidance. For complex transactions — including cost segregation studies, depreciation recapture planning, or large property sales — consult a qualified tax professional.</p>
+  </div>
+</div>
+<footer><p>© 2025 RealtyTaxTools &nbsp;·&nbsp; <a href="https://realtytaxtools.com">Free Calculators</a> &nbsp;·&nbsp; Built by a licensed CPA</p></footer>
+</body>
+</html>

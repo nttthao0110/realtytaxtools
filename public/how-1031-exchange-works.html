@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>How a 1031 Exchange Works: Rules, Deadlines, and Tax Savings Explained | RealtyTaxTools</title>
+  <meta name="description" content="A 1031 exchange lets you sell a rental property and defer capital gains tax indefinitely by reinvesting in a like-kind replacement. Learn the 45-day and 180-day rules, boot examples, basis carryover, and deadline warnings."/>
+  <meta name="robots" content="index, follow"/>
+  <link rel="canonical" href="https://realtytaxtools.com/blog/how-1031-exchange-works.html"/>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7M3QK9XD6E"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-7M3QK9XD6E');</script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+    {"@type":"Question","name":"What are the 45-day and 180-day rules?","acceptedAnswer":{"@type":"Answer","text":"After closing on the relinquished property, you have 45 days to identify potential replacement properties in writing to your Qualified Intermediary, and 180 days to close on one or more of those replacements. Both deadlines are absolute — there are no extensions for any reason."}},
+    {"@type":"Question","name":"What is boot in a 1031 exchange?","acceptedAnswer":{"@type":"Answer","text":"Boot is the taxable portion of a 1031 exchange. It arises when you trade down in price, keep cash proceeds, or take on less debt on the replacement property. Boot is taxed in the year of the exchange — first as depreciation recapture, then as capital gain."}},
+    {"@type":"Question","name":"Do I need a Qualified Intermediary?","acceptedAnswer":{"@type":"Answer","text":"Yes — legally required. The QI holds your sale proceeds and transfers them to the replacement property closing. You cannot use your own attorney, CPA, or anyone who acted as your agent in the past two years. QI fees typically run $800–$1,500."}},
+    {"@type":"Question","name":"Can I exchange into multiple replacement properties?","acceptedAnswer":{"@type":"Answer","text":"Yes. The 3-property identification rule allows you to identify up to 3 properties and close on one or more within 180 days. Common strategy for diversifying a single large property into multiple smaller assets."}},
+    {"@type":"Question","name":"Can I combine a 1031 exchange with cost segregation?","acceptedAnswer":{"@type":"Answer","text":"Yes — one of the most powerful combinations in real estate tax planning. After acquiring the replacement property, commission a cost segregation study immediately. Accelerated deductions offset current income while the deferred gain continues compounding across multiple investment cycles."}}
+  ]}
+  </script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{background:#07080a;color:#e8e4dc;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:16px;line-height:1.7}
+    nav{background:#0d0f12;border-bottom:1px solid #1c2028;padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    .nav-logo{color:#c8a96e;font-weight:700;font-size:15px;text-decoration:none;letter-spacing:.04em}
+    .nav-links{display:flex;gap:24px}
+    .nav-links a{color:#8a8478;font-size:13px;text-decoration:none}
+    .nav-links a:hover{color:#e8e4dc}
+    .container{max-width:760px;margin:0 auto;padding:48px 24px 80px}
+    .breadcrumb{font-size:12px;color:#3a3830;margin-bottom:32px}
+    .breadcrumb a{color:#7a6540;text-decoration:none}
+    .breadcrumb span{margin:0 6px}
+    .article-tag{font-size:11px;color:#c8a96e;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+    h1{font-size:32px;font-weight:400;color:#e8e4dc;line-height:1.3;margin-bottom:16px}
+    .article-meta{font-size:12px;color:#3a3830;margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid #1c2028}
+    .article-meta strong{color:#7a6540}
+    h2{font-size:22px;font-weight:400;color:#e8e4dc;margin:40px 0 16px;padding-bottom:10px;border-bottom:1px solid #1c2028}
+    h3{font-size:16px;font-weight:600;color:#c8a96e;margin:28px 0 10px;letter-spacing:.03em}
+    p{color:#8a8478;margin-bottom:16px}
+    strong{color:#e8e4dc}
+    a{color:#c8a96e}
+    a:hover{color:#e8c98e}
+    ul{color:#8a8478;padding-left:24px;margin-bottom:16px}
+    li{margin-bottom:8px}
+    .callout{background:#0d0f12;border:1px solid #1c2028;border-left:3px solid #c8a96e;border-radius:6px;padding:20px 24px;margin:28px 0}
+    .callout p{margin-bottom:0}
+    .warning{background:#130a08;border:1px solid #3a1510;border-left:3px solid #c07050;border-radius:6px;padding:20px 24px;margin:28px 0}
+    .warning p{margin-bottom:0;color:#c8896e}
+    .warning strong{color:#e8a878}
+    table{width:100%;border-collapse:collapse;margin:24px 0;font-size:14px}
+    th{background:#0d0f12;color:#c8a96e;font-weight:500;text-align:left;padding:10px 14px;border-bottom:1px solid #1c2028;font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+    td{padding:10px 14px;border-bottom:1px solid #1c2028;color:#8a8478}
+    td:first-child{color:#e8e4dc}
+    tr:last-child td{border-bottom:none}
+    tr:nth-child(even) td{background:#0a0c0f}
+    .timeline{margin:28px 0}
+    .timeline-item{display:flex;gap:16px;margin-bottom:20px}
+    .timeline-badge{flex-shrink:0;width:40px;height:40px;background:#0d0f12;border:1px solid #c8a96e;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#c8a96e}
+    .timeline-content h3{margin:0 0 4px;font-size:14px;color:#e8e4dc;letter-spacing:0;text-transform:none}
+    .timeline-content p{font-size:13px;margin-bottom:0}
+    .cta{background:linear-gradient(135deg,#0d1520ee,#0a1015ee);border:1px solid #2a3040;border-radius:10px;padding:32px;text-align:center;margin:48px 0}
+    .cta h3{color:#c8a96e;font-size:18px;margin-bottom:10px;letter-spacing:0;text-transform:none}
+    .cta p{font-size:14px;margin-bottom:20px}
+    .cta a.btn{display:inline-block;padding:12px 28px;background:linear-gradient(135deg,#c8a96e,#e8c98e);color:#050608;font-weight:700;font-size:14px;border-radius:6px;text-decoration:none;letter-spacing:.04em}
+    .faq-item{background:#0d0f12;border:1px solid #1c2028;border-radius:8px;padding:20px;margin-bottom:14px}
+    .faq-item h3{color:#c8a96e;font-size:14px;margin:0 0 10px;letter-spacing:0;text-transform:none}
+    .faq-item p{font-size:13px;margin-bottom:0}
+    .internal-links{margin:32px 0;padding:20px 24px;background:#0a0c0f;border:1px solid #1c2028;border-radius:8px}
+    .internal-links p{font-size:13px;color:#7a6540;margin-bottom:8px;font-style:italic}
+    .internal-links a{display:block;font-size:13px;color:#2e75b6;margin-bottom:4px}
+    .credibility{background:#0d0f12;border:1px solid #1c2028;border-radius:8px;padding:24px;margin-top:48px}
+    .credibility h3{color:#c8a96e;font-size:13px;margin-bottom:10px;letter-spacing:0;text-transform:none}
+    .credibility p{font-size:12px;margin-bottom:8px}
+    .credibility p:last-child{margin-bottom:0}
+    footer{border-top:1px solid #1c2028;padding:32px 24px;text-align:center;font-size:12px;color:#3a3830}
+    footer a{color:#7a6540;text-decoration:none}
+  </style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="https://realtytaxtools.com">RealtyTaxTools</a>
+  <div class="nav-links">
+    <a href="https://realtytaxtools.com">Calculators</a>
+    <a href="/blog">Blog</a>
+  </div>
+</nav>
+<div class="container">
+  <div class="breadcrumb"><a href="https://realtytaxtools.com">Home</a><span>›</span><a href="/blog">Blog</a><span>›</span>How a 1031 Exchange Works</div>
+  <div class="article-tag">1031 Exchange · Capital Gains · Tax Strategy</div>
+  <h1>How a 1031 Exchange Works: Rules, Deadlines, and Tax Savings Explained</h1>
+  <div class="article-meta">By <strong>RealtyTaxTools CPA Team</strong> &nbsp;·&nbsp; Updated June 2025 &nbsp;·&nbsp; 12 min read</div>
+
+  <p>When you sell a rental property, the IRS expects its share — capital gains tax, depreciation recapture, and potentially the Net Investment Income Tax. On a property with significant appreciation, that combined tax bill can easily reach 30–40% of your gain. A 1031 exchange lets you defer all of it by rolling your proceeds into a like-kind replacement property.</p>
+  <p>Done correctly, a 1031 exchange converts a large tax payment into continued investment capital. Done incorrectly, it fails entirely and the full tax bill comes due immediately.</p>
+
+  <div class="callout"><p><strong>Bottom line:</strong> A 1031 exchange defers capital gains tax, depreciation recapture, and NIIT by reinvesting sale proceeds into a like-kind replacement. You have 45 days to identify the replacement and 180 days to close. A Qualified Intermediary must hold all funds — touching the money yourself disqualifies the exchange.</p></div>
+
+  <h2>The Tax You're Deferring</h2>
+  <table>
+    <thead><tr><th>Tax Component</th><th>Rate</th><th>Applies To</th></tr></thead>
+    <tbody>
+      <tr><td>Long-term capital gains</td><td>0%, 15%, or 20%</td><td>Appreciation above adjusted basis</td></tr>
+      <tr><td>Depreciation recapture (§1250)</td><td>25% max</td><td>All building depreciation claimed over hold period</td></tr>
+      <tr><td>Net Investment Income Tax (NIIT)</td><td>3.8%</td><td>Gain if AGI exceeds $200K single / $250K married</td></tr>
+    </tbody>
+  </table>
+  <p><strong>Example:</strong> Investor sells with $200,000 gain and $80,000 accumulated depreciation. At a 20% capital gains rate, 25% recapture, and 3.8% NIIT, combined federal tax exceeds <strong>$75,000</strong> — an amount that compounds significantly if deferred.</p>
+
+  <h2>The 1031 Exchange Timeline</h2>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-badge">1</div>
+      <div class="timeline-content">
+        <h3>Before closing — Engage a Qualified Intermediary (QI)</h3>
+        <p>Must be in place before you close on the sale. Cannot be your attorney, CPA, or anyone who acted as your agent within the past two years. QI fees typically $800–$1,500.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-badge">2</div>
+      <div class="timeline-content">
+        <h3>Day 0 — Close on the relinquished property</h3>
+        <p>Exchange clock starts at closing. Proceeds go directly to the QI — never to you. Both deadlines run from this date.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-badge">3</div>
+      <div class="timeline-content">
+        <h3>Day 1–45 — Identify replacement property in writing</h3>
+        <p>Identify potential replacements in writing to your QI by midnight of Day 45. Options: (a) 3-property rule — up to 3 properties regardless of value, or (b) 200% rule — any number as long as combined value ≤ 200% of sale price.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-badge">4</div>
+      <div class="timeline-content">
+        <h3>Day 46–180 — Close on the replacement property</h3>
+        <p>Close on one or more identified properties by Day 180. QI transfers proceeds to closing. File a tax return extension if your return due date falls before Day 180.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="warning"><p><strong>DEADLINE WARNING:</strong> The 45-day identification deadline is ABSOLUTE. No extensions for weekends, holidays, illness, natural disasters, or financing delays. Miss Day 45 without a written identification and the entire exchange fails — the full tax becomes due immediately. Most experienced investors identify all 3 properties within the first 2 weeks.</p></div>
+  <div class="warning"><p><strong>DEADLINE WARNING:</strong> The 180-day closing deadline is equally absolute. Financing delays, title problems, and seller defaults are NOT grounds for extension. Always identify backup properties and build adequate contingency time into your purchase contracts.</p></div>
+
+  <h2>Boot: When the Exchange Is Only Partial</h2>
+  <table>
+    <thead><tr><th>Scenario</th><th>Boot Created</th><th>Tax Result</th></tr></thead>
+    <tbody>
+      <tr><td>Equal/higher price, reinvest all equity</td><td>None</td><td>100% deferred</td></tr>
+      <tr><td>Trade down to lower-priced property</td><td>Price difference</td><td>Taxable in year of exchange</td></tr>
+      <tr><td>Keep some cash proceeds</td><td>Cash received</td><td>Taxable in year of exchange</td></tr>
+      <tr><td>Replace with lower mortgage balance</td><td>Debt reduction</td><td>Taxable in year of exchange</td></tr>
+    </tbody>
+  </table>
+  <h3>Boot example — partial exchange</h3>
+  <p>Investor sells for $500,000 with a $200,000 mortgage. Net equity = $300,000. Buys a $450,000 replacement with $200,000 cash + $250,000 mortgage, keeping $100,000 cash.</p>
+  <ul>
+    <li>Sale $500,000 vs. replacement $450,000 → <strong>$50,000 price boot</strong></li>
+    <li>Equity reinvested $200,000 vs. $300,000 received → <strong>$100,000 equity boot</strong></li>
+    <li>Total taxable boot = <strong>$100,000</strong> (the larger shortfall)</li>
+    <li>Boot taxed first as depreciation recapture, then as capital gain</li>
+  </ul>
+
+  <h2>Basis Carryover in the Replacement Property</h2>
+  <table>
+    <thead><tr><th>Item</th><th>Amount</th></tr></thead>
+    <tbody>
+      <tr><td>Replacement property purchase price</td><td>$600,000</td></tr>
+      <tr><td>Less: deferred gain from exchange</td><td>($180,000)</td></tr>
+      <tr><td>= Carryover basis in replacement property</td><td>$420,000</td></tr>
+      <tr><td>Annual depreciation (80% building ÷ 27.5)</td><td>$420,000 × 80% ÷ 27.5 = $12,218/yr</td></tr>
+    </tbody>
+  </table>
+  <p>The replacement is depreciated on its <strong>carryover basis</strong> — not its full purchase price. Annual deductions are smaller than on a fresh purchase. This is the cost of tax deferral.</p>
+  <p>Many investors chain 1031 exchanges throughout their career. At death, heirs receive a <strong>stepped-up basis</strong> under current law — potentially eliminating all accumulated deferred gain.</p>
+
+  <h2>Reverse and Improvement Exchanges</h2>
+  <h3>Reverse exchange — buy first, sell later</h3>
+  <p>Buy the replacement property first, then sell the relinquished property within 180 days. An Exchange Accommodation Titleholder (EAT) holds the replacement during the exchange period. More complex ($3,000–$6,000 extra cost), but solves the problem of finding the ideal replacement before selling.</p>
+  <h3>Improvement (build-to-suit) exchange</h3>
+  <p>Use exchange proceeds to fund improvements on the replacement before it is transferred to you. Improvements must be substantially completed before Day 180. Useful when the replacement requires renovation to meet your investment criteria.</p>
+
+  <div class="internal-links">
+    <p>Related calculators on RealtyTaxTools:</p>
+    <a href="https://realtytaxtools.com/?calc=capitalgains">→ Free Capital Gains Calculator — see your full tax at sale</a>
+    <a href="https://realtytaxtools.com/?calc=depreciation">→ Free Depreciation Calculator — know your accumulated recapture</a>
+    <a href="https://realtytaxtools.com/?calc=costseg">→ Free Cost Segregation Estimator — maximize deductions on your replacement</a>
+  </div>
+
+  <div class="cta">
+    <h3>Calculate Your 1031 Exchange Tax Savings Free</h3>
+    <p>Enter your sale price, basis, and depreciation taken — see exactly how much tax a successful exchange defers and what your replacement property basis will be.</p>
+    <a class="btn" href="https://realtytaxtools.com/?calc=exchange1031">Use the Free 1031 Exchange Calculator →</a>
+  </div>
+
+  <h2>Frequently Asked Questions</h2>
+  <div class="faq-item"><h3>Can I do a 1031 exchange on my primary residence?</h3><p>No. Section 1031 applies only to investment or business-use property. Converting a primary residence to a rental and holding it as a rental for 1–2 years may then qualify it for a 1031.</p></div>
+  <div class="faq-item"><h3>What happens if I miss the 45-day identification deadline?</h3><p>The exchange fails completely. The entire gain is taxable in the year the relinquished property was sold — not the year you missed the deadline. No exceptions, no extensions, no cure. Most experienced investors identify properties within the first 2 weeks and use all 3 identification slots as backups.</p></div>
+  <div class="faq-item"><h3>What happens if I can't close by Day 180?</h3><p>The exchange fails and the full deferred tax is due in the year of the original sale. Financing delays, seller defaults, and title problems are not grounds for extension. Always identify backup properties and build adequate contingency time into contracts.</p></div>
+  <div class="faq-item"><h3>Do I have to reinvest all the equity, or just the sale price?</h3><p>Both. The replacement must equal or exceed in (1) purchase price AND (2) equity reinvested. Example: $400,000 sale, $150,000 payoff = $250,000 equity. You must reinvest all $250,000 AND buy a replacement worth at least $400,000.</p></div>
+  <div class="faq-item"><h3>Can I exchange into multiple replacement properties?</h3><p>Yes. The 3-property rule allows identifying up to 3 properties and closing on one or more. Common for investors diversifying out of a single large asset into multiple smaller ones.</p></div>
+  <div class="faq-item"><h3>Can I combine a 1031 exchange with cost segregation?</h3><p>Yes — one of the most powerful combinations available. After acquiring the replacement, commission a cost segregation study immediately. Accelerated deductions offset current income while the deferred gain continues compounding across multiple investment cycles.</p></div>
+
+  <div class="credibility">
+    <h3>Why These Calculations Matter</h3>
+    <p>Tax calculators provide estimates only. Actual results depend on your filing status, income level, passive activity limitations, state tax rules, and other factors.</p>
+    <p>RealtyTaxTools was built by a licensed CPA to help investors understand common real estate tax calculations using IRS rules and publicly available guidance. For complex transactions — including 1031 exchanges, cost segregation studies, and depreciation recapture planning — always work with a qualified CPA and a licensed Qualified Intermediary.</p>
+  </div>
+</div>
+<footer><p>© 2025 RealtyTaxTools &nbsp;·&nbsp; <a href="https://realtytaxtools.com">Free Calculators</a> &nbsp;·&nbsp; Built by a licensed CPA</p></footer>
+</body>
+</html>
