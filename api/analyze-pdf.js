@@ -6,7 +6,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Origin', 'https://realtytaxtools.com');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
